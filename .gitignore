@@ -1,0 +1,9 @@
+# Kept locally, not part of the public repository
+BRIEF.md
+supp/
+archive/
+.claude/
+
+# OS and editor files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What a meta-analysis of 65 studies says about how facial expressions, body language and voice relate to the Big Five personality traits.">
+  <meta name="theme-color" content="#f6f1e6">
+  <title>Personality in motion</title>
+  <!-- Link preview (LinkedIn and others). These need the full public address: change it here if the site moves. -->
+  <link rel="canonical" href="https://lstehlik2809.github.io/personality_body_language/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Personality in motion">
+  <meta property="og:title" content="Personality in motion: what body language and voice really say about the Big Five">
+  <meta property="og:description" content="An interactive field guide to a meta-analysis covering 65 studies. 21 links between nonverbal cues and personality held up, and every one of them is small.">
+  <meta property="og:url" content="https://lstehlik2809.github.io/personality_body_language/">
+  <meta property="og:image" content="https://lstehlik2809.github.io/personality_body_language/assets/social-card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Personality in motion. An illustrated figure gesturing while talking, beside a small chart of 21 links between nonverbal cues and the Big Five, all of them small.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23e5ba41'/%3E%3Ccircle cx='16' cy='12' r='5' fill='%232d3c59'/%3E%3Cpath d='M8 27c1-6 5-9 8-9s7 3 8 9' fill='%232d3c59'/%3E%3C/svg%3E">
+  <link rel="preload" href="./assets/fonts/young-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./data.js"></script>
+  <script defer src="./figure.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-face" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 9.6c.8 1 1.6 1.4 2.6 1.4s1.8-.4 2.6-1.4"/><path d="M6 6.4v.2M10 6.4v.2"/></symbol>
+    <symbol id="i-body" viewBox="0 0 16 16"><circle cx="8" cy="3.2" r="1.8"/><path d="M8 5.6v5M4.2 7.6 8 6.6l3.8 1M8 10.6l-2.6 3.8M8 10.6l2.6 3.8"/></symbol>
+    <symbol id="i-voice" viewBox="0 0 16 16"><path d="M2.5 6.5v3M5.5 4v8M8.5 2.5v11M11.5 5v6M14 7v2"/></symbol>
+  </svg>
+
+  <header class="masthead wrap">
+    <span class="brand"><span class="brand-mark" aria-hidden="true"></span><span><span class="wide-only">A field guide to </span>personality cues</span></span>
+    <button class="text-button" type="button" data-open-science>The science</button>
+  </header>
+
+  <main class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <h1 id="page-title">Personality in motion</h1>
+      <p class="lede">In a meta-analysis covering 65 studies, <strong><span data-count="links">21</span> links</strong> between how people move, look and sound and their Big&nbsp;Five personality traits held up. Every one of them is small. Treat them as clues to explore, not verdicts.</p>
+    </section>
+
+    <noscript><p class="noscript">This explorer needs JavaScript. The estimates come from Tables 3–7 of <a href="https://doi.org/10.1093/oxfordhb/9780190912529.013.13">Breil et al. (2021)</a>.</p></noscript>
+
+    <section id="explorer" hidden aria-label="Cue explorer">
+      <p class="how">Choose a trait to play its cues. Choose a cue to look closer, or drag the dial to compare.</p>
+      <div class="traits" role="tablist" aria-label="Big Five traits"></div>
+
+      <div class="workbench" id="trait-panel" role="tabpanel">
+        <div class="demo">
+          <figure class="stage">
+            <div class="stage-top">
+              <span class="channel" id="channel"><svg aria-hidden="true"><use href="#i-body"/></svg><span id="channel-label">Body</span></span>
+              <div class="stage-controls">
+                <div class="stepper" id="stepper" role="group" aria-label="Step through this trait’s cues">
+                  <button type="button" class="button button-icon" id="prev" aria-label="Previous cue"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
+                  <span class="step-count" id="step-count" aria-hidden="true"></span>
+                  <button type="button" class="button button-icon" id="next" aria-label="Next cue"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+                </div>
+                <button type="button" class="button" id="replay">Replay</button>
+                <button type="button" class="button button-primary" id="tour"><span class="play-icon" aria-hidden="true"></span><span id="tour-label">Play all</span></button>
+              </div>
+            </div>
+            <div class="stage-art"><svg id="figure" aria-hidden="true" focusable="false"></svg></div>
+            <div class="dial">
+              <label class="dial-label" for="dial" id="dial-label">Drag to compare</label>
+              <input type="range" id="dial" min="0" max="100" step="1" value="90">
+              <div class="dial-ends" aria-hidden="true">
+                <span class="dial-end" id="end-less"></span>
+                <span class="dial-end" id="end-more"></span>
+              </div>
+            </div>
+            <div class="progress" aria-hidden="true"><div id="progress"></div></div>
+            <figcaption class="visually-hidden">Illustration of the selected cue. It is drawn for this site and is not footage from the studies.</figcaption>
+          </figure>
+
+          <section class="note" aria-labelledby="cue-title">
+            <p class="note-kicker" id="note-kicker"></p>
+            <h2 id="cue-title"></h2>
+            <p class="finding" id="finding"></p>
+            <section class="meaning" aria-labelledby="meaning-title">
+              <h3 id="meaning-title"></h3>
+              <p class="meaning-lead" id="meaning-lead"></p>
+              <div class="odds" id="odds"></div>
+            </section>
+            <p class="stats" id="stats"></p>
+          </section>
+        </div>
+
+        <section class="results" aria-labelledby="trait-title">
+          <div class="results-head">
+            <h2 id="trait-title"></h2>
+            <span class="count" id="link-count"></span>
+          </div>
+          <p class="gist" id="trait-gist"></p>
+          <div class="plot-head" aria-hidden="true">
+            <span><span class="wide-only">Correlation </span><i>r</i> and 95% interval</span>
+            <div class="axis"><span>−.4</span><span>−.2</span><span>0</span><span>+.2</span><span>+.4</span></div>
+            <span></span>
+          </div>
+          <ul class="cue-list" id="cue-list" aria-label="Cues with evidence of a link"></ul>
+          <p class="plot-key"><span class="key-mark" aria-hidden="true"></span>Dot: pooled <i>r</i>. Line: 95% interval. Right of 0, more of the cue goes with higher <span id="key-trait"></span>; left of 0, less of it does.</p>
+          <button type="button" class="reveal" id="reveal" aria-expanded="false" aria-controls="unclear-block"></button>
+          <div class="unclear" id="unclear-block" hidden>
+            <h3 class="unclear-title" id="unclear-title">Tested, no clear link</h3>
+            <ul class="cue-list is-unclear" id="unclear-list" aria-labelledby="unclear-title"></ul>
+            <h3 class="unclear-title" id="sparse-title">Too little evidence to judge</h3>
+            <p class="sparse" id="sparse"></p>
+          </div>
+        </section>
+      </div>
+      <p class="visually-hidden" id="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <span>Estimates: <a href="https://doi.org/10.1093/oxfordhb/9780190912529.013.13">Breil, Osterholz, Nestler &amp; Back (2021)</a>, Tables 3–7. Context: <a href="https://doi.org/10.1111/jopy.70030">Hall et al. (2025)</a>.</span>
+    <button class="text-button" type="button" data-open-science>Methods and limits</button>
+  </footer>
+
+  <dialog id="science" aria-labelledby="science-title">
+    <div class="science-inner">
+      <header class="science-head">
+        <h2 id="science-title">The science</h2>
+        <form method="dialog"><button class="button" autofocus>Close</button></form>
+      </header>
+
+      <div class="facts" aria-label="The evidence in numbers">
+        <div><strong>65</strong><span>studies reviewed</span></div>
+        <div><strong>48</strong><span>measured real personality</span></div>
+        <div><strong>125</strong><span>cue–trait pairs covered</span></div>
+        <div><strong data-count="links">21</strong><span>with a clear link</span></div>
+      </div>
+
+      <h3>Where the numbers come from</h3>
+      <p>Breil, Osterholz, Nestler and Back (2021) collected 64 articles reporting 65 independent studies of nonverbal cues and personality. In 48 of them, researchers measured how a cue relates to the target person’s actual personality, known as <em>cue validity</em>. This site shows only those results, not what observers believed.</p>
+      <p>The studies came from three places: work the authors already knew, a database search limited to peer-reviewed journals, and the first pages of Google Scholar. Targets were real people aged 16 or older whose behaviour was not experimentally manipulated. Personality came from self-reports and/or reports by people who knew them. Cues were coded or rated from recordings, photographs and live interactions.</p>
+      <p>The tables report the 39 cues that appeared most often across studies. The authors grouped related measures into these broad categories and assigned related traits to the nearest Big Five dimension (for example, dominance and shyness to extraversion; warmth and arrogance to agreeableness). They note that other groupings are possible and share the raw data so that readers can try them.</p>
+      <p>Correlations for the same cue and trait were averaged within each sample, then pooled across samples with a random-effects model (inverse-variance weights, DerSimonian–Laird estimate of between-study variance). Where a study reported only partial correlations, such as those controlling for age and sex, the authors used them.</p>
+
+      <h3>What counts as a link here</h3>
+      <p>The explorer covers the 25 dynamic cue categories in Tables 3–7 (facial expression, body language and voice) and the Big Five, so 125 cue–trait pairs. A pair counts as a link when at least two samples were pooled and the reported 95% interval lies wholly above or below zero. Intervals that touch 0.00 do not count. That leaves <span data-count="links">21</span> links. Another <span data-count="unclear"></span> pairs were tested in two or more samples without a clear link, and <span data-count="sparse"></span> rest on one study or none. Appearance cues and intelligence are outside the explorer’s scope.</p>
+      <p>This screen is an editorial rule, not a test the authors ran. Breil and colleagues used a different yardstick: they highlighted cues with a correlation of at least .10 in two or more studies, whether or not the interval excluded zero. The rule here is also not adjusted for the number of comparisons. With <span data-count="tested"></span> pairs tested at the 95% level, about <span data-count="chance"></span> would pass by chance even if no cue were related to any trait, so a few of the <span data-count="links">21</span> links could be chance findings.</p>
+
+      <h3>How to read the numbers</h3>
+      <ul>
+        <li><i>r</i> runs from −1 to +1. A positive value means more of the cue goes with higher trait scores; a negative value means less of it does. The links here range from <span data-count="rmin">.10</span> to <span data-count="rmax">.24</span> in size. By the usual benchmarks (.10 small, .30 medium) all of them are small; Breil and colleagues treat .10 as the threshold for at least a small effect.</li>
+        <li>The line around each dot is the 95% confidence interval of the pooled estimate. <i>k</i> is the number of independent samples and <i>n</i> the number of people in them.</li>
+        <li>The “100 people” panels turn <i>r</i> into a picture. They assume that cue and trait are normally distributed and linearly related with the pooled correlation. Then, among people above the median on the cue, the share above the median on the trait is 50% + arcsin(<i>r</i>)/π. The range comes from the interval bounds. It illustrates the average relationship and is not a rule for judging anyone.</li>
+      </ul>
+
+      <h3>Limits worth keeping in mind</h3>
+      <ul>
+        <li>These are correlations from observational studies. They do not show that a trait causes a behaviour. A cue can also reflect the situation, or a third factor such as age or sex, which only some of the studies adjusted for.</li>
+        <li>Evidence is thin for many pairs: <span data-count="thin"></span> of the <span data-count="links">21</span> links rest on only two or three samples. Most studies measured fewer than ten cues, and many cue–trait combinations have little or no data.</li>
+        <li>The categories are broad. “Forward lean / proximity”, for example, combines leaning in and standing close, and studies defined and measured cues in different ways.</li>
+        <li>The authors call their review a first, preliminary overview and say it does not aim to be complete. Some studies reported only significant correlations or only adjusted ones, which can bias pooled estimates.</li>
+        <li>Context matters but is poorly understood. Settings, observation time, recording channels and target groups varied, and the review could say little about how these change any single cue. The authors ask for replications in more diverse samples and settings. Recorded tasks may also narrow the range of behaviour seen in everyday life.</li>
+        <li>A link can differ between groups of people. One study the authors cite found several cues that signalled extraversion in women but not in men. The pooled figures average over such differences.</li>
+        <li>Each cue is analysed on its own, although cues co-occur. Hand gestures, for example, happen mostly while people are speaking, so the two are hard to separate.</li>
+      </ul>
+
+      <h3>About the illustrations</h3>
+      <p>The figure and its movements were drawn for this site to show what each cue category looks like. The dial shows the direction of a link, not its size; the size is in the chart and the “100 people” panel. Voice cues are drawn as speech-bubble diagrams. Cues such as a “pleasant” voice were rated by people in the original studies, and such judgements vary between raters.</p>
+
+      <details>
+        <summary>How Hall et al. (2025) used this meta-analysis</summary>
+        <p>Hall, Murphy, Schlegel and Back asked 245 U.S. adults on Amazon Mechanical Turk how likely 20 everyday nonverbal behaviours are for someone high in one Big Five trait, then compared these beliefs with Breil’s tables. Matching 10 to 14 cues per trait, beliefs tracked cue validity well for four traits (profile correlations .50 to .76) but not for openness (.27). With so few cues per trait these correlations are imprecise, and the one for conscientiousness (.50, ten cues) was not statistically significant.</p>
+        <p>The authors list their own limits: about 50 raters per trait; profile correlations based on no more than 20 cues; cue wordings that did not always match Breil’s categories; questions about people in general, without age, gender or culture, compared with specific targets recorded in particular settings, where some cues may vary little; a possible role of how socially desirable a cue seems; and 20 cues that cannot cover every behaviour, with gaps in the overlap that mean the picture could change with new research. Raters also disagreed with each other quite a lot (intraclass correlations .25 to .53).</p>
+        <p>One example in their discussion is slouching: on average, extraverts tend not to slouch. In Breil’s table the matching cue, upright and open posture, has <i>r</i> = +.15 for extraversion, but its interval (−.01 to +.31) touches zero, so this explorer lists it under “no clear link”. The explorer uses Breil’s estimates directly and does not show the belief ratings.</p>
+      </details>
+
+      <h3>Sources</h3>
+      <ul class="sources">
+        <li><a href="https://doi.org/10.1093/oxfordhb/9780190912529.013.13">Breil, S. M., Osterholz, S., Nestler, S. &amp; Back, M. D. (2021)</a>. Contributions of nonverbal cues to the accurate judgment of personality traits. <em>The Oxford Handbook of Accurate Personality Judgment</em>. <a href="https://osf.io/mn2je/download">Author manuscript</a> · <a href="https://osf.io/9p64g/">Data and code</a></li>
+        <li><a href="https://doi.org/10.1111/jopy.70030">Hall, J. A., Murphy, N. A., Schlegel, K. &amp; Back, M. D. (2025)</a>. Explicit beliefs about nonverbal behavior and the Big Five traits. <em>Journal of Personality</em>, 94, 678–689 (online 2025, issue 2026).</li>
+        <li>Fonts: Young Serif and Public Sans, both under the SIL Open Font License.</li>
+      </ul>
+    </div>
+  </dialog>
+</body>
+</html>

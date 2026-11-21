@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Link-preview card (source for docs/assets/social-card.png)</title>
+  <!-- Rendered to a 1200 × 630 PNG with headless Chrome; see the README. Not published. -->
+  <link rel="stylesheet" href="docs/styles.css">
+  <style>
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+    body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 510px;
+      align-items: center;
+      gap: 50px;
+      padding: 0 60px;
+      border-top: 10px solid var(--navy);
+    }
+    .card-brand { display: flex; align-items: center; gap: 12px; color: var(--navy); font-size: 19px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .card-brand .brand-mark { width: 24px; height: 24px; }
+    h1 { margin: 22px 0 0; color: var(--navy); font: 400 92px/.95 var(--display); letter-spacing: -.025em; }
+    .card-lede { margin: 22px 0 0; color: var(--ink); font-size: 29px; line-height: 1.3; }
+    .card-plot { display: block; width: 100%; height: auto; margin-top: 26px; overflow: visible; }
+    .card-plot .zero { stroke: var(--zero); stroke-width: 1.5; }
+    .card-plot .grid { stroke: var(--rule); stroke-width: 1; }
+    .card-plot .ci { stroke: var(--navy); stroke-width: 3; stroke-linecap: round; }
+    .card-plot .dot { fill: var(--navy); }
+    .card-plot text { fill: var(--muted); font: 600 15px var(--sans); }
+    .card-caption { margin: 10px 0 0; color: var(--muted); font-size: 23px; line-height: 1.3; }
+    .card-caption strong { color: var(--ink); }
+    .stage { width: 510px; }
+    .stage-art { aspect-ratio: 4 / 3; }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="card-brand"><span class="brand-mark"></span>A field guide to personality cues</div>
+    <h1>Personality<br>in motion</h1>
+    <p class="card-lede">What body language and voice really say about the Big&nbsp;Five.</p>
+    <svg class="card-plot" id="plot" viewBox="0 0 520 96" aria-hidden="true"></svg>
+    <p class="card-caption"><strong id="count"></strong> links held up. Every one is small.</p>
+  </div>
+  <figure class="stage"><div class="stage-art"><svg id="figure"></svg></div></figure>
+
+  <script src="docs/data.js"></script>
+  <script src="docs/figure.js"></script>
+  <script>
+    "use strict";
+    // One still pose from the site's own figure.
+    motionFigure.mount(document.querySelector("#figure"));
+    motionFigure.render({ cue: "gestures", amount: .94, time: 1.12, energy: 1, dt: .016, instant: true, compact: false });
+
+    // Every link from the data, sorted by r: dot = pooled r, line = 95% interval, on a −.5 to +.5 scale.
+    const links = traitData.flatMap(trait => trait.links).sort((a, b) => a.r - b.r);
+    const y = r => 48 - r * 88;
+    const x = i => 44 + i * (460 / (links.length - 1));
+    const signed = v => `${v < 0 ? "−" : v > 0 ? "+" : ""}${Math.abs(v).toFixed(1).replace(/^0/, "")}`;
+    document.querySelector("#plot").innerHTML =
+      [-.4, .4].map(v => `<line class="grid" x1="36" x2="514" y1="${y(v)}" y2="${y(v)}"/><text x="30" y="${y(v) + 5}" text-anchor="end">${signed(v)}</text>`).join("")
+      + `<line class="zero" x1="36" x2="514" y1="${y(0)}" y2="${y(0)}"/><text x="30" y="${y(0) + 5}" text-anchor="end">0</text>`
+      + links.map((link, i) => `<line class="ci" x1="${x(i)}" x2="${x(i)}" y1="${y(link.lo)}" y2="${y(link.hi)}"/><circle class="dot" cx="${x(i)}" cy="${y(link.r)}" r="5.5"/>`).join("");
+    document.querySelector("#count").textContent = links.length;
+  </script>
+</body>
+</html>
